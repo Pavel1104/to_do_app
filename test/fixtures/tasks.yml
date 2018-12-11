@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  isDone: false
+  name: Task 1
+  deadline: 2018-12-11
+
+two:
+  isDone: false
+  name: Task 2
+  deadline: 2018-12-11
+
+three:
+  isDone: false
+  name: Task 2
+  deadline: 2018-14-11
+
+four:
+  isDone: true
+  name: Task 4
+  deadline: 2018-12-11

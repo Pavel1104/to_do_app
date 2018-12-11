@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+tasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4']
+tasks.each{|task| Task.create(
+                                name: Task,
+                                isDone: false,
+                                deadline:Time.new.strftime("%F")
+                              )}
