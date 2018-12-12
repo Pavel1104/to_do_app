@@ -1,0 +1,103 @@
+$header_hight: 50px;
+$bg_color: lightgray;
+
+@mixin styling($sidebar_width, $display_right_sidebar:none) {
+  header {
+    background-color: royalblue;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: $header_hight;
+    line-height: $header_hight;
+    z-index: 5;
+    font-size: 1.5rem;
+    color: beige;
+    .user-name {
+      padding-left: 10px;
+    }
+    .archived-tasks {
+      position: fixed;
+      padding-right: 10px;
+      @if $display_right_sidebar == inline-block {right: $sidebar_width};
+      @if $display_right_sidebar == none {right: 0};
+    }
+    div {
+      display: inline-block;
+    }
+  }
+
+  #sidebar {
+    height: calc(100% - #{$header_hight});
+    width: $sidebar_width;
+    position: fixed;
+    z-index: 4;
+    top: $header_hight;
+    left: 0;
+    overflow-x: hidden;
+    padding: 20px 10px 20px 10px;
+    color: #818181;
+    box-sizing: border-box;
+    a {
+      line-height: 1rem;
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 1rem;
+      color: #555;
+      display: block;
+      &:hover {
+        color: black;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  #main {
+    font-size: 1rem;
+    position: fixed;
+    top: $header_hight;
+    left: $sidebar_width;
+    overflow: scroll;
+    padding: 10px;
+    box-sizing: border-box;
+    width: calc(100% - #{$sidebar_width});
+    height: calc(100% - #{$header_hight});
+    background-color: beige;
+    z-index: 1;
+    &:after {
+      content: "";
+      display: $display_right_sidebar;
+      width: $sidebar_width;
+      height: 100%;
+      position: fixed;
+      right: 0;
+      top: $header_hight;
+      box-sizing: border-box;
+      background-color: $bg_color;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  @include styling($sidebar_width: 160px);
+}
+@media screen and (min-width: 501px) and (max-width: 900px) {
+  @include styling($sidebar_width: 200px);
+}
+
+@media screen and (min-width: 901px) {
+  @include styling($sidebar_width: 25%, $display_right_sidebar: inline-block);
+}
+
+html {
+  background-color: $bg_color;
+  font-size: 14px;
+  overflow: hidden;
+}
+html body {
+  font-family: "Lato", sans-serif;
+}
+
+ul {
+  list-style-type: none;
+}
