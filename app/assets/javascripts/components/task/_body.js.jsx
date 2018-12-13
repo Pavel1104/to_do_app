@@ -80,10 +80,10 @@ class Body extends React.Component {
 
   render(){
     return(
-      <div>
-        <NewTask handleFormSubmit={this.handleFormSubmit} />
+      <React.Fragment>
         <AllTasks tasks={this.state.tasks} handleDelete={this.handleDelete} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate} />
-      </div>
+        <NewTask handleFormSubmit={this.handleFormSubmit} />
+      </React.Fragment>
     )
   }
 }
