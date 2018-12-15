@@ -52,7 +52,7 @@ $bg_color: lightgray;
     }
   }
 
-  #main {
+  #main-tasks {
     font-size: 1rem;
     position: fixed;
     top: $header_hight;
@@ -181,6 +181,70 @@ $bg_color: lightgray;
     }
   }
 
+  html #add-new-project {
+    padding-left: 12px;
+    width: calc(100% - 30px);
+
+    button {
+      border-radius: 6px;
+      display: inline-block;
+      cursor: pointer;
+      font-family: Arial;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 6px;
+      text-decoration: none;
+
+      @if $screen_size != 'small' {
+        width: 70px;
+        margin: 6px 0;
+      };
+      @if $screen_size == 'small' {
+        width: 100%;
+        margin: 3px 0;
+      };
+
+      &:active {
+        position: relative;
+        top: 1px;
+      }
+      &:focus {
+        outline: none;
+      }
+      &.submit {
+        margin-left: 3px;
+
+        box-shadow: inset 0px 1px 0px 0px #bbdaf7;
+        background: linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+        background-color: #79bbff;
+        border: 1px solid #84bbf3;
+        color: #ffffff;
+        text-shadow: 0px 1px 0px #528ecc;
+
+        &:hover {
+          background: linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+          background-color: #378de5;
+        }
+      }
+
+      &.cancel {
+        margin-left: 5px;
+
+        box-shadow: inset 0px 1px 3px 0px #91b8b3;
+        background: linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+        background-color: #768d87;
+        border:1px solid  #566963;
+        color: #ffffff;
+        text-shadow: 0px -1px 0px #2b665e;
+
+        &:hover {
+          background: linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+          background-color: #6c7c7c;
+        }
+      }
+    }
+  }
+
   .task {
     margin: 10px 0;
     display: inline-block;
@@ -207,6 +271,7 @@ $bg_color: lightgray;
       @if $screen_size == 'small' {margin-top: 10px};
     }
   }
+
   .task-menu {
     display: inline-block;
     font-size: 1rem;
@@ -242,6 +307,102 @@ $bg_color: lightgray;
       }
     }
   }
+
+  .project, #add-new-project {
+    width: calc(100% - 18px);
+    display: inline-block;
+
+    input[type=color] {
+      background-color: transparent;
+      border: none;
+      width: 16px;
+      height: 20px;;
+    }
+
+    input[type=text] {
+      width: calc(100% - 25px);
+      margin: 3px 0;
+      color: #555;
+      border: none;
+      &:disabled {
+        background-color: transparent;
+      }
+      line-height: 1.5rem;
+    }
+  }
+
+  .project-menu {
+    display: inline-block;
+    font-size: 1rem;
+    width: 15px;
+    text-align: center;
+    position: absolute;
+    line-height: 30px;
+    margin: 0 5px;
+    text-align: left;
+
+    i.dots {display: inline;}
+
+    i.edit, i.delete {
+      display: none;
+    }
+
+    i.disabled {
+      color: lightgrey;
+    }
+
+    &:hover {
+      margin-left: -68px;
+      width: 88px;
+      i.dots {display: none;}
+
+      .tooltip {
+        background: #88b7d5;
+        border: 4px solid #c2e1f5;
+        width: 58px;
+        margin-top: -4px;
+
+        &:after, &:before {
+          left: 100%;
+          top: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          margin-left: -26px;
+        }
+
+        &:after {
+          border-color: rgba(136, 183, 213, 0);
+          border-left-color: #88b7d5;
+          border-width: 10px;
+          margin-top: -10px;
+        }
+        &:before {
+          border-color: rgba(194, 225, 245, 0);
+          border-left-color: #c2e1f5;
+          border-width: 16px;
+          margin-top: -16px;
+        }
+
+        i.dots {display: none;}
+        i.edit, i.delete {
+          display: inline-block;
+          line-height: 1.5rem;
+          margin-left: 10px;
+          cursor: pointer;
+        }
+        i.edit:hover:not(.disabled) {
+          color: darkorange;
+        }
+        i.delete:hover {
+          color: red;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -266,9 +427,12 @@ html body {
 
 ul {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-left: 12px;
 }
 
-.show-form-add-task {
+.show-form-add-task, .show-form-add-project {
   color: red;
   font-weight: bold;
   letter-spacing: 2px;

@@ -81,7 +81,7 @@ class Body extends React.Component {
   render(){
     return(
       <React.Fragment>
-        <AllTasks tasks={this.state.tasks} handleDelete={this.handleDelete} handleDelete={this.handleDelete} handleUpdate = {this.handleUpdate} />
+        <AllTasks tasks={this.state.tasks} handleDelete={this.handleDelete} handleUpdate={this.handleUpdate} />
         <NewTask handleFormSubmit={this.handleFormSubmit} />
       </React.Fragment>
     )

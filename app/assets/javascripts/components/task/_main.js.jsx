@@ -1,4 +1,4 @@
-const Main = (props) => {
+const MainTask = (props) => {
   return(
     <React.Fragment>
       <Header />

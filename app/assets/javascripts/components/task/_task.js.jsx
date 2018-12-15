@@ -10,8 +10,9 @@ class Task extends React.Component{
     this.handleEdit = this.handleEdit.bind(this);
     this.onDeadlineChange = this.onDeadlineChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
-    this.deadlineInput = React.createRef();
     this.handleKeyUp = this.handleKeyUp.bind(this);
+
+    this.deadlineInput = React.createRef();
   }
 
   handleEdit(event){
@@ -34,6 +35,7 @@ class Task extends React.Component{
   onDeadlineChange(event){
     this.setState({deadline: event.target.value});
   }
+
   onNameChange(event) {
     this.setState({name: event.target.value});
   }

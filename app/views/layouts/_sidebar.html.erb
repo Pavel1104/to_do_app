@@ -4,16 +4,7 @@
     <%= link_to "TODO Day", '#' %>
   </section>
   <section id="projects">
-    <%= link_to "Projects", '?projects' %>
-    <ul class="project-list">
-      <li><%= link_to "Project 1", '?project_1' %></li>
-      <li><%= link_to "Project 2", '?project_2' %></li>
-      <li><%= link_to "Project 3", '?project_3' %></li>
-      <li><%= link_to "Project 4", '?project_4' %></li>
-      <li><%= link_to "Project 5", '?project_5' %></li>
-      <li><%= link_to "Project 6", '?project_6' %></li>
-      <li><%= link_to "Project 7", '?project_7' %></li>
-    </ul>
+    <%= react_component 'MainProject' %>
   </section>
   <section>
     <p><%= Time.new %></p>
