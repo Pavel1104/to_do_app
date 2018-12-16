@@ -35,7 +35,8 @@ class BodyProjects extends React.Component {
   addNewProject(project){
     this.setState({
       projects: this.state.projects.concat(project)
-    })
+    });
+    window.location.reload();
   }
 
   updateProject(project){
@@ -44,6 +45,7 @@ class BodyProjects extends React.Component {
     this.setState({
       projects: newProjects
     })
+    window.location.reload();
   }
 
   handleDelete(id){

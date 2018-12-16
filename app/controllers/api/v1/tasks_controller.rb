@@ -1,6 +1,6 @@
 class Api::V1::TasksController < ApplicationController
   def index
-    render json: Task.all
+    render json: {tasks: Task.all, projects: Project.all}
   end
 
   def create
@@ -21,6 +21,6 @@ class Api::V1::TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:id, :name, :deadline, :isDone, :project_id)
+    params.require(:task).permit(:id, :name, :deadline, :isDone, :project_id, :priority)
   end
 end

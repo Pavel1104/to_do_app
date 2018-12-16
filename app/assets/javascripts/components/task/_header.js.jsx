@@ -1,4 +1,4 @@
-class Header extends React.Component {
+class HeaderTask extends React.Component {
   formatDate(dateObj, format){
     let monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
     let curr_date = dateObj.getDate();

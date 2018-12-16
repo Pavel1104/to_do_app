@@ -27,4 +27,5 @@ tasks.each{|task| Task.create(
                                 isDone:     false,
                                 deadline:   Time.new.strftime("%F"),
                                 project_id: project_ids[rand(project_ids.length)],
+                                priority:   rand(2),
                               )}

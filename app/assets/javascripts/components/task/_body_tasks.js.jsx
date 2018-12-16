@@ -1,8 +1,9 @@
-class Body extends React.Component {
+class BodyTasks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: []
+      tasks: [],
+      projects: [],
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.addNewTask = this.addNewTask.bind(this);
@@ -15,11 +16,21 @@ class Body extends React.Component {
   componentDidMount(){
     fetch('/api/v1/tasks.json')
       .then((response) => {return response.json()})
-      .then((data) => {this.setState({ tasks: data }) });
+      .then((data) => {
+        this.setState({
+          tasks: data.tasks,
+          projects: data.projects,
+        })
+      });
   }
 
-  handleFormSubmit(name, deadline){
-    let body = JSON.stringify({task: {name: name, deadline: deadline} })
+  handleFormSubmit(name, deadline, priority, project_id){
+    let body = JSON.stringify({task: {
+      name: name,
+      deadline: deadline,
+      priority: priority,
+      project_id: project_id,
+    } })
     fetch('http://localhost:3000/api/v1/tasks', {
       method: 'POST',
       headers: {
@@ -81,8 +92,8 @@ class Body extends React.Component {
   render(){
     return(
       <React.Fragment>
-        <AllTasks tasks={this.state.tasks} handleDelete={this.handleDelete} handleUpdate={this.handleUpdate} />
-        <NewTask handleFormSubmit={this.handleFormSubmit} />
+        <AllTasks tasks={this.state.tasks} projects={this.state.projects} handleDelete={this.handleDelete} handleUpdate={this.handleUpdate} />
+        <NewTask handleFormSubmit={this.handleFormSubmit} projects={this.state.projects}/>
       </React.Fragment>
     )
   }

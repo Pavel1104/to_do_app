@@ -1,8 +1,8 @@
 const MainTask = (props) => {
   return(
     <React.Fragment>
-      <Header />
-      <Body />
+      <HeaderTask />
+      <BodyTasks />
     </React.Fragment>
   )
 }
