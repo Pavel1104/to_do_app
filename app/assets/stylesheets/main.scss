@@ -25,6 +25,19 @@ $bg_color: lightgray;
     div {
       display: inline-block;
     }
+    .logo{
+      margin: 0 10px 0 24px;
+    }
+    .archived-tasks {
+      margin: 0 10px;
+      cursor: pointer;
+      &.show-tasks {
+        color: #ffffff;
+      }
+      &.hide-tasks {
+        color: greenyellow;
+      }
+    }
   }
 
   #sidebar {

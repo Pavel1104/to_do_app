@@ -2,7 +2,7 @@ const MainTask = (props) => {
   return(
     <React.Fragment>
       <HeaderTask />
-      <BodyTasks />
+      <BodyTasks showArchivedTasks={props.showArchivedTasks}/>
     </React.Fragment>
   )
 }

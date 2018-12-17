@@ -92,7 +92,10 @@ class BodyTasks extends React.Component {
   render(){
     return(
       <React.Fragment>
-        <AllTasks tasks={this.state.tasks} projects={this.state.projects} handleDelete={this.handleDelete} handleUpdate={this.handleUpdate} />
+        <AllTasks tasks={this.state.tasks} projects={this.state.projects}
+          handleDelete={this.handleDelete} handleUpdate={this.handleUpdate}
+          showArchivedTasks={this.props.showArchivedTasks}
+        />
         <NewTask handleFormSubmit={this.handleFormSubmit} projects={this.state.projects}/>
       </React.Fragment>
     )

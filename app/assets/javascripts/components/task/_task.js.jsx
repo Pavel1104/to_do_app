@@ -141,7 +141,7 @@ class Task extends React.Component{
 
     return (
       <React.Fragment>
-        <div className="task-field">
+        <div className="task-field" style={this.state.isDone && !this.props.showArchivedTasks ? {display: 'none'} : {}}>
           <form className={`task ${this.state.isDone ? 'done' : ''}`}>
             <div className={`color priority priority-${this.state.priority}`}
               style={this.state.editable ? {display: 'none'} : {}}
