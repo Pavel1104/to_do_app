@@ -259,6 +259,11 @@ $bg_color: lightgray;
     @if $screen_size == 'big' {width: calc(100% - 25vw - 10px)};
   }
 
+  .task.done input[name=name] {
+    color: red;
+    text-decoration: line-through;
+  }
+
   .task, #add-new-task {
     margin: 10px 0;
     display: inline-block;
@@ -415,6 +420,12 @@ $bg_color: lightgray;
           color: darkorange;
         }
         i.delete:hover {
+          color: red;
+        }
+        i.to-do:hover {
+          color: greenyellow;
+        }
+        i.done:hover {
           color: red;
         }
       }

@@ -4,6 +4,7 @@ class Task extends React.Component{
     this.state = {
       editable: false,
       showForn: false,
+      isDone: props.task.isDone,
       name: props.task.name,
       deadline: props.task.deadline,
       priority: props.task.priority,
@@ -20,6 +21,8 @@ class Task extends React.Component{
     this.handleChangePriority = this.handleChangePriority.bind(this);
     this.updateProjectColor = this.updateProjectColor.bind(this);
     this.handleChangeProject = this.handleChangeProject.bind(this);
+    this.onIsDoneClick = this.onIsDoneClick.bind(this);
+    this.updateTask = this.updateTask.bind(this);
 
     this.deadlineInput = React.createRef();
   }
@@ -49,10 +52,16 @@ class Task extends React.Component{
     this.setState({name: event.target.value});
   }
 
+  onIsDoneClick() {
+    this.updateTask(!this.state.isDone);
+    this.setState({isDone: !this.state.isDone})
+  }
+
   handleKeyUp(event) {
     event.preventDefault();
     if (event.keyCode === 27) {
       this.setState({
+        isDone: this.props.task.isDone,
         name: this.props.task.name,
         deadline: this.props.task.deadline,
         priority: this.props.priority,
@@ -60,16 +69,22 @@ class Task extends React.Component{
         editable: false,
       })
     } else if (event.keyCode === 13) {
-      let task = {
-        id: this.props.task.id,
-        name: this.state.name,
-        deadline: this.state.deadline,
-        priority: this.state.priority,
-        project_id: this.state.project_id,
-      };
-      this.props.handleUpdate(task);
+      this.updateTask();
       this.setState({editable: false});
     }
+  }
+
+  updateTask(isDone) {
+    if (isDone === undefined) {isDone = this.state.isDone};
+    let task = {
+      id: this.props.task.id,
+      isDone: isDone,
+      name: this.state.name,
+      deadline: this.state.deadline,
+      priority: this.state.priority,
+      project_id: this.state.project_id,
+    };
+    this.props.handleUpdate(task);
   }
 
   handleChangePriority(event) {
@@ -112,7 +127,6 @@ class Task extends React.Component{
   }
 
   render(){
-
     let priorityOptions = [0, 1, 2].map((item) => {
       return (
         <option key={item} value={item}>{item}</option>
@@ -128,7 +142,7 @@ class Task extends React.Component{
     return (
       <React.Fragment>
         <div className="task-field">
-          <form className="task">
+          <form className={`task ${this.state.isDone ? 'done' : ''}`}>
             <div className={`color priority priority-${this.state.priority}`}
               style={this.state.editable ? {display: 'none'} : {}}
             ></div>
@@ -162,7 +176,9 @@ class Task extends React.Component{
           <div className="task-menu">
             <i className="dots fas fa-ellipsis-v"></i>
             <div className="tooltip">
-              <i className="to-do fas fa-check"></i>
+              <i className={`${this.state.isDone ? 'done' : 'to-do'}  fas fa-check`}
+                onClick={this.onIsDoneClick}
+              ></i>
               <i className={`edit fas fa-pencil-alt ${this.state.editable? 'disabled' : ''}`}
                 onClick={this.handleEdit} disabled = {(this.state.editable)? "disabled" : ""}
               ></i>
