@@ -9,7 +9,10 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def destroy
-    Project.destroy(params[:id])
+    project = Project.find(params[:id])
+    if !project.has_undone_tasks?
+      project.destroy
+    end
   end
 
   def update

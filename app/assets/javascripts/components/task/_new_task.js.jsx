@@ -61,10 +61,10 @@ class NewTask extends React.Component {
   showForm(){
     let pColor;
     try {
-      pColor = this.props.projects[0].color;
       this.setState({
         showForm: true,
-        projectColor: pColor,
+        projectColor: this.props.projects[0].color,
+        project_id: this.props.projects[0].id,
         showFormInfo: false,
       });
     } catch(e) {

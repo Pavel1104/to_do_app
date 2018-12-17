@@ -13,6 +13,16 @@ class NewProject extends React.Component {
     this.onCancel = this.onCancel.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.showForm = this.showForm.bind(this);
+    this.generateColor = this.generateColor.bind(this);
+  }
+
+  generateColor(){
+    let arr = [1,2,3,4,5,6,7,8,9,0,'a','b','c','d','e','f'];
+    let color = '#';
+    for (let index = 0; index < 6; index++) {
+      color +=  arr[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
   onSubmit(event){
@@ -39,7 +49,10 @@ class NewProject extends React.Component {
   }
 
   showForm(){
-    this.setState({showForm: true});
+    this.setState({
+      showForm: true,
+      color: this.generateColor(),
+    });
   }
 
   handleKeyUp(event) {
