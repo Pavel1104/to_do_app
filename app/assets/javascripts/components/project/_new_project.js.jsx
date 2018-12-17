@@ -41,12 +41,12 @@ class NewProject extends React.Component {
     this.clearForm();
   }
   onColorChange(event){
-    fetch( this.setState({color: event.target.value}) )
-    .then(() => { this.validate() });
+    this.setState({color: event.target.value});
+    this.validate();
   }
   onNameChange(event) {
-    fetch( this.setState({name: event.target.value}) )
-    .then(() => { this.validate() })
+    this.setState({name: event.target.value});
+    this.validate();
   }
   onCancel(event){
     event.preventDefault();

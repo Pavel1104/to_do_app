@@ -53,13 +53,13 @@ class Project extends React.Component{
   }
 
   onNameChange(event) {
-    fetch( this.setState({name: event.target.value}) )
-    .then(() => { this.validate() })
+    this.setState({name: event.target.value});
+    this.validate();
   }
 
   onColorChange(event){
-    fetch( this.setState({color: event.target.value}) )
-    .then(() => { this.validate() });
+    this.setState({color: event.target.value});
+    this.validate();
   }
 
   handleKeyUp(event) {

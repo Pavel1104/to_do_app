@@ -54,13 +54,13 @@ class NewTask extends React.Component {
   }
 
   onDeadlineChange(event){
-    fetch( this.setState({deadline: event.target.value}) )
-    .then(() => { this.validate() });
+    this.setState({deadline: event.target.value});
+    this.validate();
   }
 
   onNameChange(event) {
-    fetch( this.setState({name: event.target.value}) )
-    .then(() => { this.validate() });
+    this.setState({name: event.target.value});
+    this.validate();
   }
 
   onCancel(event){
@@ -117,7 +117,7 @@ class NewTask extends React.Component {
       altInput: false,
       altFormat: "F j, Y",
       dateFormat: "Y-m-d",
-      // minDate: "today",
+      minDate: "today",
       enableTime: false,
       // dateFormat: "Y-m-d H:i",
       dateFormat: "Y-m-d",
