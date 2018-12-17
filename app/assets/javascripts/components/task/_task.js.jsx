@@ -23,25 +23,43 @@ class Task extends React.Component{
     this.handleChangeProject = this.handleChangeProject.bind(this);
     this.onIsDoneClick = this.onIsDoneClick.bind(this);
     this.updateTask = this.updateTask.bind(this);
+    this.validate = this.validate.bind(this);
 
     this.deadlineInput = React.createRef();
   }
 
+  validate(){
+    if (this.state.name != ''
+        && this.state.deadline != ''
+        && this.state.priority != ''
+        && this.state.project_id != ''
+      ) {
+      this.setState({disabledSubmitButton: false});
+    } else {
+      this.setState({disabledSubmitButton: true});
+    }
+  }
+
   handleEdit(event){
-    if (this.state.editable) {
+    if (this.state.editable && !this.state.disabledSubmitButton) {
       this.updateTask();
     }
-    this.setState({
-      editable: !this.state.editable
-    })
+
+    if (!this.state.editable) {
+      this.setState({
+        editable: !this.state.editable
+      })
+    }
   }
 
   onDeadlineChange(event){
     this.setState({deadline: event.target.value});
+    this.validate();
   }
 
   onNameChange(event) {
     this.setState({name: event.target.value});
+    this.validate();
   }
 
   onIsDoneClick() {
@@ -61,8 +79,12 @@ class Task extends React.Component{
         editable: false,
       })
     } else if (event.keyCode === 13) {
-      this.updateTask();
-      this.setState({editable: false});
+      try {
+        if ( !this.state.disabledSubmitButton ) {
+          this.updateTask();
+          this.setState({editable: false});
+        }
+      } catch (error) {}
     }
   }
 
@@ -81,6 +103,7 @@ class Task extends React.Component{
 
   handleChangePriority(event) {
     this.setState({priority: event.target.value});
+    this.validate();
   }
 
   handleChangeProject(event) {
@@ -90,6 +113,7 @@ class Task extends React.Component{
       project_id: event.target.value,
       projectColor: pColor,
     });
+    this.validate();
   }
 
   updateProjectColor() {

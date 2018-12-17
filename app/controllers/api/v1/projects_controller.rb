@@ -1,6 +1,6 @@
 class Api::V1::ProjectsController < ApplicationController
   def index
-    render json: Project.all
+    render json: Project.project_with_undone_tasks_count
   end
 
   def create

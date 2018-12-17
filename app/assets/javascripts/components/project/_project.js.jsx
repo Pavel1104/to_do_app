@@ -5,31 +5,61 @@ class Project extends React.Component{
       editable: false,
       name: this.props.project.name,
       color: this.props.project.color,
+      undoneTasks: this.props.project.tasks_count,
+      disabledSubmitButton: true,
     }
     this.handleEdit = this.handleEdit.bind(this);
     this.onColorChange = this.onColorChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.updateProject = this.updateProject.bind(this);
+    this.validate = this.validate.bind(this);
+    this.canDelete = this.canDelete.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
     this.colorInput = React.createRef();
   }
 
+  validate(){
+    if (this.state.name != '' && this.state.color != '') {
+      this.setState({disabledSubmitButton: false});
+    } else {
+      this.setState({disabledSubmitButton: true});
+    }
+  }
+
+  canDelete(){
+    if (this.state.undoneTasks == 0) {
+      return true;
+    }
+  }
+
+  handleDelete(){
+    if (this.canDelete()) {
+      this.props.handleDelete(this.props.project.id)
+    }
+  }
+
   handleEdit(event){
-    if (this.state.editable) {
+    if (this.state.editable && !this.state.disabledSubmitButton) {
       this.updateProject();
     }
-    this.setState({
-      editable: !this.state.editable
-    })
+
+    if (!this.state.editable) {
+      this.setState({
+        editable: !this.state.editable
+      })
+    }
   }
 
   onNameChange(event) {
-    this.setState({name: event.target.value});
+    fetch( this.setState({name: event.target.value}) )
+    .then(() => { this.validate() })
   }
 
   onColorChange(event){
-    this.setState({color: event.target.value});
+    fetch( this.setState({color: event.target.value}) )
+    .then(() => { this.validate() });
   }
 
   handleKeyUp(event) {
@@ -41,7 +71,11 @@ class Project extends React.Component{
         editable: false,
       })
     } else if (event.keyCode === 13) {
-      this.updateProject();
+      try {
+        if ( !this.state.disabledSubmitButton ) {
+          this.updateProject();
+        }
+      } catch (error) {}
     }
   }
 
@@ -58,6 +92,7 @@ class Project extends React.Component{
   render(){
     return (
       <React.Fragment>
+        <label className="undone-tasks">{(this.state.undoneTasks > 0) ? this.state.undoneTasks : ''}</label>
         <div className="project">
           <input type="color" name="color" value={this.state.color} disabled = {(!this.state.editable)? "disabled" : ""}  onChange={this.onColorChange} onKeyUp={this.handleKeyUp} ref={this.colorInput} placeholder='color' />
           <input type="text" name="name" value={this.state.name} disabled = {(!this.state.editable)? "disabled" : ""} onChange={this.onNameChange} onKeyUp={this.handleKeyUp} placeholder='Project name' />
@@ -65,8 +100,12 @@ class Project extends React.Component{
         <div className="project-menu">
           <i className="dots fas fa-ellipsis-v"></i>
           <div className="tooltip">
-            <i className={`edit fas fa-pencil-alt ${this.state.editable? 'disabled' : ''}`} onClick={this.handleEdit} disabled = {(this.state.editable)? "disabled" : ""}></i>
-            <i className="delete far fa-trash-alt" onClick={() => this.props.handleDelete(this.props.project.id)}></i>
+            <i className={`edit fas fa-pencil-alt ${this.state.editable? 'disabled' : ''}`}
+              onClick={this.handleEdit} disabled = {(this.state.editable)? "disabled" : ""}
+            ></i>
+            <i className={`delete far fa-trash-alt ${!this.canDelete() ? "disabled" : ""}`}
+              onClick={this.handleDelete}
+            ></i>
           </div>
         </div>
       </React.Fragment>

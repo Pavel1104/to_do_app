@@ -60,12 +60,14 @@ class BodyTasks extends React.Component {
     this.setState({
       tasks: newTasks
     })
+    window.location.reload();
   }
 
   addNewTask(task){
     this.setState({
       tasks: this.state.tasks.concat(task)
     })
+    window.location.reload();
   }
 
   handleUpdate(task){
@@ -86,7 +88,8 @@ class BodyTasks extends React.Component {
     newTasks.push(task)
     this.setState({
       tasks: newTasks
-    })
+    });
+    window.location.reload();
   }
 
   render(){

@@ -4,13 +4,13 @@ class NewTask extends React.Component {
     this.state = {
       name: '',
       deadline: '',
-
-      priority: 0,
+      priority: '0',
       project_id: '',
       projectColor: '#ffffff',
 
       showForm: false,
       showFormInfo: false,
+      disabledSubmitButton: true,
     };
 
     this.onNameChange = this.onNameChange.bind(this);
@@ -22,8 +22,24 @@ class NewTask extends React.Component {
     this.findProject = this.findProject.bind(this);
     this.handleChangePriority = this.handleChangePriority.bind(this);
     this.handleChangeProject = this.handleChangeProject.bind(this);
+    this.validate = this.validate.bind(this);
 
     this.deadlineInput = React.createRef();
+  }
+
+  validate(){
+    console.log(this.state);
+    if (this.state.name != ''
+        && this.state.deadline != ''
+        && this.state.priority != ''
+        && this.state.project_id != ''
+        && this.state.projectColor != ''
+      ) {
+      this.setState({disabledSubmitButton: false});
+    } else {
+      this.setState({disabledSubmitButton: true});
+    }
+    console.log(this.state.disabledSubmitButton);
   }
 
   onSubmit(event){
@@ -38,11 +54,13 @@ class NewTask extends React.Component {
   }
 
   onDeadlineChange(event){
-    this.setState({deadline: event.target.value});
+    fetch( this.setState({deadline: event.target.value}) )
+    .then(() => { this.validate() });
   }
 
   onNameChange(event) {
-    this.setState({name: event.target.value});
+    fetch( this.setState({name: event.target.value}) )
+    .then(() => { this.validate() });
   }
 
   onCancel(event){
@@ -54,12 +72,12 @@ class NewTask extends React.Component {
     this.setState({
       name: '',
       deadline: '',
+      priority: 0,
       showForm: false,
     })
   }
 
   showForm(){
-    let pColor;
     try {
       this.setState({
         showForm: true,
@@ -80,6 +98,7 @@ class NewTask extends React.Component {
 
   handleChangePriority(event) {
     this.setState({priority: event.target.value});
+    this.validate();
   }
 
   handleChangeProject(event) {
@@ -89,6 +108,8 @@ class NewTask extends React.Component {
       project_id: event.target.value,
       projectColor: pColor,
     });
+
+    this.validate();
   }
 
   componentDidMount() {
@@ -148,9 +169,13 @@ class NewTask extends React.Component {
             <input type="color" name="color" readOnly={true} value={this.state.projectColor} disabled="disabled"/>
             <div className={`color priority priority-${this.state.priority}`}></div>
 
-            <button className="submit" onClick={this.onSubmit}>Submit</button>
+            <button className="submit" disabled={this.state.disabledSubmitButton? true : false} onClick={this.onSubmit}>Submit</button>
             <button className="cancel" onClick={this.onCancel}>Cancel</button>
           </form>
+        </div>
+
+        <div className="instructions" style={this.state.showFormInfo ? {} : { display: 'none' }}>
+          <p>You should start with creating a project</p>
         </div>
       </React.Fragment>
     );

@@ -5,6 +5,7 @@ class NewProject extends React.Component {
       name: '',
       color: '#FFFFFF',
       showForm: false,
+      disabledSubmitButton: true,
     };
 
     this.onNameChange = this.onNameChange.bind(this);
@@ -14,6 +15,7 @@ class NewProject extends React.Component {
     this.clearForm = this.clearForm.bind(this);
     this.showForm = this.showForm.bind(this);
     this.generateColor = this.generateColor.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   generateColor(){
@@ -25,16 +27,26 @@ class NewProject extends React.Component {
     return color;
   }
 
+  validate(){
+    if (this.state.name != '' && this.state.color != '') {
+      this.setState({disabledSubmitButton: false});
+    } else {
+      this.setState({disabledSubmitButton: true});
+    }
+  }
+
   onSubmit(event){
     event.preventDefault();
     this.props.handleFormSubmit(this.state.name, this.state.color);
     this.clearForm();
   }
   onColorChange(event){
-    this.setState({color: event.target.value});
+    fetch( this.setState({color: event.target.value}) )
+    .then(() => { this.validate() });
   }
   onNameChange(event) {
-    this.setState({name: event.target.value});
+    fetch( this.setState({name: event.target.value}) )
+    .then(() => { this.validate() })
   }
   onCancel(event){
     event.preventDefault();
@@ -60,7 +72,11 @@ class NewProject extends React.Component {
     if (event.keyCode === 27) {
       this.clearForm();
     } else if (event.keyCode === 13) {
-      this.onSubmit(event);
+      try {
+        if ( !this.state.disabledSubmitButton ) {
+          this.onSubmit(event);
+        }
+      } catch (error) {}
     }
   }
 
@@ -72,7 +88,7 @@ class NewProject extends React.Component {
           <input type="color" name="color" value={this.state.color} onChange={this.onColorChange} onKeyUp={this.handleKeyUp} />
           <input type="text" name="name" value={this.state.name} onChange={this.onNameChange} onKeyUp={this.handleKeyUp} placeholder='Project' />
 
-          <button className="submit" onClick={this.onSubmit}>Submit</button>
+          <button className="submit" disabled={this.state.disabledSubmitButton? true : false} onClick={this.onSubmit}>Submit</button>
           <button className="cancel" onClick={this.onCancel}>Cancel</button>
         </form>
       </React.Fragment>
