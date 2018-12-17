@@ -28,7 +28,6 @@ class NewTask extends React.Component {
   }
 
   validate(){
-    console.log(this.state);
     if (this.state.name != ''
         && this.state.deadline != ''
         && this.state.priority != ''
@@ -39,7 +38,6 @@ class NewTask extends React.Component {
     } else {
       this.setState({disabledSubmitButton: true});
     }
-    console.log(this.state.disabledSubmitButton);
   }
 
   onSubmit(event){

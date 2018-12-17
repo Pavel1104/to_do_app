@@ -21,7 +21,7 @@ class General extends React.Component {
             <i className="fas fa-mug-hot"></i>
           </div>
           <div className="user-name">
-            <p>to do: add user name</p>
+            <p>Hi, user</p>
           </div>
           <div className={`archived-tasks ${this.state.showArchivedTasks ? "hide-tasks" : "show-tasks"}`}>
             <i className="fas fa-trophy" onClick={this.onArciveClick}></i>
