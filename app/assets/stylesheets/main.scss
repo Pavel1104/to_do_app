@@ -15,6 +15,8 @@ $bg_color: lightgray;
     color: beige;
     .user-name {
       padding-left: 10px;
+      position: absolute;
+      margin-top: 3px;
     }
     .archived-tasks {
       position: fixed;
