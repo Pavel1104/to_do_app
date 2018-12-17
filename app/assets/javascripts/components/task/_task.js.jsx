@@ -28,17 +28,9 @@ class Task extends React.Component{
   }
 
   handleEdit(event){
-    event.preventDefault();
-    this.deadlineInput.current.flatpickr({
-      altInput: false,
-      altFormat: "F j, Y",
-      dateFormat: "Y-m-d",
-      minDate: "today",
-      enableTime: false,
-      // dateFormat: "Y-m-d H:i",
-      dateFormat: "Y-m-d",
-      time_24hr: true,
-    });
+    if (this.state.editable) {
+      this.updateTask();
+    }
     this.setState({
       editable: !this.state.editable
     })
@@ -64,8 +56,8 @@ class Task extends React.Component{
         isDone: this.props.task.isDone,
         name: this.props.task.name,
         deadline: this.props.task.deadline,
-        priority: this.props.priority,
-        project_id: this.props.project_id,
+        priority: this.props.task.priority,
+        project_id: this.props.task.project_id,
         editable: false,
       })
     } else if (event.keyCode === 13) {
@@ -149,7 +141,7 @@ class Task extends React.Component{
             <select className={`select priority priority-${this.state.priority}`}
               value={this.state.priority} disabled={(!this.state.editable)? "disabled" : ""}
               style={this.state.editable ? {} : {display: 'none'}}
-              onChange={this.handleChangePriority}
+              onChange={this.handleChangePriority} onKeyUp={this.handleKeyUp}
             >
               {priorityOptions}
             </select>
@@ -167,7 +159,7 @@ class Task extends React.Component{
 
             <select className="project" value={this.state.project_id}
               disabled = {(!this.state.editable)? "disabled" : ""}
-              onChange={this.handleChangeProject}
+              onChange={this.handleChangeProject} onKeyUp={this.handleKeyUp}
             >
               {projectOptions}
             </select>
